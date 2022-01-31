@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+  </head>
+<body>
+<div>
+  <h2>Tutorial - fase 00</h2>
+
+  <p>
+    Bem-vindo ao XXX<br/>
+    Nesse jogo você precisa escrever código em Python no editor de texto, para que seu personagem faça os objetivos da fase atual.
+  </p>
+  <p>
+    O jogo funciona por turnos, o turno acaba logo depois de todos os personagens da fase executarem seu turno.<br/>
+    Essa primeira fase só tem você, então após terminar seu turno, começará outro logo em seguida até que você complete o objetivo ou reinicie o jogo apertando ctrl-s.
+  </p>
+  <p>
+    Se você não souber nada nada de Python, seu progresso será um pouco difícil, por isso recomendamos esse tutorial rápido: XXXXX.
+  </p>
+
+  <p>
+    Nessa tela você tem 3 elementos principais:
+      <ul>
+        <li>O editor de texto, à sua esquerda.</li>
+        <li>A tela do jogo, na parte superior direita.</li>
+        <li>E o console de resposta, na parte inferior direita.</li>
+      </ul>
+  </p>
+
+  <p>
+    Essa fase 00 é de tutorial, então fique tranquilo que seu objetivo é simples, mas eles se tornarão mais desafiadores ao longo do jogo.
+  </p>
+
+  <h2> Objetivo </h2>
+  <p>
+    Seu objetivo agora é levar nosso personagem Clóvis até o outro lado da estrada para que continue seu caminho até a fazenda.
+  </p>
+
+  <h3> Documentação - Introdução </h3>
+
+  <p>
+    Você pode reparar que o editor de texto já vem preenchido com algum código.<br/>
+    Esse código é um esqueleto necessário para que tudo funcione de acordo, mas não se preocupe com os class, def, self e etc.. por enquanto.<br/>
+    Esse são conceitos importantes na programação, mas não são necessários agora.
+  </p>
+  <p>
+    O único que você precisa estar atento é o <b>play_turn</b> (do inglês jogue_turno).<br/>
+    <b>play_turn</b> é uma função (funções são como comandos ou ações) e toda lógica do nosso jogador deve ser escrita dentro dela.<br/>
+    No Python denominamos que estamos escrevendo código dentro de uma função ao colocar uma identação, ou seja, 4 espaços em branco a mais (ou 1 tab).<br/>
+    Mas claro que você sabe disso pq você fez o tutorial rápido de Python, certo?
+  </p>
+  <p>
+    Então você precisa escrever seu código dentro da função <b>play_turn</b> para o Clóvis andar.<br/>
+    "Ok, isso ficou claro, mas como?" você deve estar se perguntando.<br>
+    Para responder isso, vamos com mais documentação:
+  </p>
+
+  <h3> Documentação - Player </h3>
+  <p>
+    Repare que a função <b>play_turn</b> recebe 2 argumentos: self e player, mas vamos ignorar o self por enquanto.<br/>
+    O player (do inglês jogador) é a representação do seu jogador, o Clóvis, e todos os comandos de ação vão partir dele, por exemplo o comando wait (do inglês, esperar):<br/>
+    <br/><code>player.wait()</code><br/><br/>
+    Faz o Clóvis esperar esse turno e não fazer nada.<br/>
+    ps: Se você não sabe porque colocar esses () após o wait, é porque wait é um comando dentro do player, comandos (ou funções) são sempre chamados utilizando parênteses depois do nome, mas explicaremos mais depois.
+  </p>
+
+  <p>
+    Aqui está uma lista inicial de funções disponíveis no player:
+  </p>
+  <p>
+    <code>player.moveUp()</code> - O jogador anda uma casa para cima. <br/>
+    <code>player.moveRight()</code> - O jogador anda uma casa para direta. <br/>
+    <code>player.moveDown()</code> - O jogador anda uma casa para baixo. <br/>
+    <code>player.moveLeft()</code> - O jogador anda uma casa para esquerda. <br/>
+    <code>player.wait()</code> - O jogador não faz nada e espera. <br/>
+  </p>
+  <p>
+    <b>Mas atenção!</b><br/><br/>
+    Você só pode usar um movimento físico durante o turno. Movimentos físicos são aqueles que tem algum tipo de movimentação ou força física, como andar.<br/>
+    Caso você use mais de um movimento físico durante o turno, ele será ignorado, aparecerá um aviso no console e você terá pontos descontados por isso.
+  </p>
+
+  <p>
+    Parabéns por ter lido até aqui!<br/>
+    Documentações podem ser bem extensas mesmo, mas é assim que nós programadores descobrimos como usar códigos e ferramentas de outras pessoas.
+  </p>
+  <p>
+    Agora você tem todas as informações para fazer o Clóvis chegar ao outro lado do caminho.<br/>
+    Boa sorte!
+  </p>
+  <p>
+    - Leonardo Baptista
+  </p>
+</div>
+</body>
+</html>

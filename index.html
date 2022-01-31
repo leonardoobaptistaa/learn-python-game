@@ -1,0 +1,197 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Game!</title>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.4.13/ace.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.4.13/ext-language_tools.js"></script>
+
+    <script type="module" src="src/main.js?v=5"></script>
+
+    <script type="text/javascript"
+        src="//cdn.jsdelivr.net/npm/brython@3.10.4/brython.min.js">
+    </script>
+    <script type="text/javascript"
+        src="//cdn.jsdelivr.net/npm/brython@3.10.4/brython_stdlib.js">
+    </script>
+
+    <style type="text/css" media="screen">
+    #editor {
+        position: absolute;
+        left: 9px;
+
+        right: 819px;
+        top: 8px;
+        bottom: 8px;
+    }
+
+    #game-window {
+        float:right;
+        margin-top: 0px;
+        margin-right: 2px;
+    }
+
+    #debugDiv {
+        position: absolute;
+        bottom: 8px;
+        width: 800px;
+        top: 618px;
+        right: 8px;
+        overflow-x: hidden; /* Hide horizontal scrollbar */
+        overflow-y: scroll; /* Add vertical scrollbar */
+        background-color: black;
+        color: white;
+    }
+
+    #debugDiv p {
+        margin: 4px 0px;
+        padding: 0px 8px;
+
+        overflow: visible;
+    }
+
+    #tutorial {
+        position: absolute;
+        right: 8px;
+        top: 8px;
+        bottom: 8px;
+        width:540px;
+
+        z-index: 10;
+        background-color: white;
+
+        overflow: scroll;
+        padding-left: 16px;
+
+        font-size: 1.2em;
+    }
+
+    .visible {
+      visibility: visible;
+      opacity: 1;
+      transition: opacity 0.2s linear;
+    }
+
+    .hidden {
+      visibility: hidden;
+      opacity: 0;
+      transition: visibility 0s 0.2s, opacity 0.2s linear;
+    }
+  </style>
+  </head>
+  <body onload="brython()">
+    <div id="tutorial" class="hidden"></div>
+    <div id="game-window"> </div>
+    <div style="color:#ee2222;margin-top:9px;display:none;" id="source-warning">Your code have problems</div>
+
+<div id="editor">#Atenção - Esse jogo deve ser jogado em Python
+# A função play_turn é executada todo turno para determinar a ação do jogador.
+# ctrl-s salva e executa o código.
+# ctrl-h abre/fecha a ajuda. (no mac, cmd-h)
+
+class PlayerControl:
+
+    def play_turn(self, player):
+         player.wait()
+
+</div>
+
+<div id="debugDiv">
+</div>
+
+
+<script>
+    ace.require("ace/ext/language_tools");
+    globalThis.editor = ace.edit("editor", {
+        theme: "ace/theme/monokai",
+        wrap: true,
+        autoScrollEditorIntoView: true,
+        fontSize: 18,
+    });
+
+    globalThis.editor.setOptions({
+        enableBasicAutocompletion: true,
+        enableSnippets: true,
+        enableLiveAutocompletion: true
+    });
+
+    globalThis.editor.commands.addCommand({
+        name: "runCode",
+        bindKey: {win: "Ctrl-s", mac: "Cmd-s"},
+        exec: function(editor) {
+            restartGame();
+        }
+    });
+    globalThis.editor.commands.addCommand({
+        name: "help",
+        bindKey: {win: "Ctrl-h", mac: "Cmd-h"},
+        exec: function(editor) {
+            let element = document.getElementById("tutorial");
+            if (element.classList.contains("hidden")) {
+                element.classList.add('visible');
+                element.classList.remove('hidden');
+            }
+            else {
+                element.classList.add('hidden');
+                element.classList.remove('visible');
+            }
+
+        }
+    });
+
+    globalThis.editor.session.setMode("ace/mode/python");
+    globalThis.editor.focus();
+
+    function restartGame() {
+        window.loader.restartScene();
+        resetDebug();
+    }
+
+    function resetDebug() {
+        document.getElementById('debugDiv').innerHTML = '';
+    }
+
+    async function fetchHtmlAsText(url) {
+        return await (await fetch(url)).text();
+    }
+
+    console.olog = console.log;
+    console.log = function(message) {
+        console.olog(message);
+        let debugDiv = document.getElementById('debugDiv');
+        debugDiv.innerHTML += '<p>' + message + '</p>';
+        debugDiv.scrollTop = debugDiv.scrollHeight;
+    };
+    console.error = console.debug = console.info =  console.log
+
+    var langTools = ace.require("ace/ext/language_tools");
+    var playerCompleter = {
+        getCompletions: function(editor, session, pos, prefix, callback) {
+            // if (prefix.length === 0) { callback(null, []); return }
+            var curLine = (session.getDocument().getLine(pos.row)).trim();
+            var curTokens = curLine.slice(0, pos.column).split(/\s+/);
+            var curCmd = curTokens[0];
+            if (!curCmd) return;
+
+            var lastToken = curTokens[curTokens.length - 1];
+            if (lastToken.startsWith('player.') == false) { return; }
+            callback(null, [
+                {name: 'moveRight', value: 'moveRight()', score: 1000, meta: "method"},
+                {name: 'moveDown', value: 'moveDown()', score: 1000, meta: "method"},
+                {name: 'moveUp', value: 'moveUp()', score: 1000, meta: "method"},
+                {name: 'moveLeft', value: 'moveLeft()', score: 1000, meta: "method"},
+                {name: 'look', value: 'look()', score: 1000, meta: "method"},
+                {name: 'wait', value: 'wait()', score: 1000, meta: "method"},
+            ]);
+        }
+    }
+    langTools.addCompleter(playerCompleter);
+
+    async function loadTutorial() {
+        document.getElementById("tutorial").innerHTML = await fetchHtmlAsText("tutorials/lesson01.html");
+    }
+    loadTutorial();
+</script>
+
+  </body>
+</html>
